@@ -1,21 +1,24 @@
 import React from 'react';
-import { shallow, render } from 'enzyme';
+import { Provider } from 'react-redux';
+import { render } from 'enzyme';
+import configureMockStore from 'redux-mock-store'
 
 import App from '../../components/app';
+
 
 describe('App', () => {
     let component;
     beforeEach(() => {
-        component = shallow(<App />);
+        const middlewares = [];
+        const mockStore = configureMockStore(middlewares);
+        component = render(<Provider store={mockStore({ comments: [] })}><App /></Provider>);
     });
 
     it('shows a comment box', () => {
-        // see http://airbnb.io/enzyme/docs/api/ShallowWrapper/shallow.html
-        expect(component.find('CommentBox').shallow().hasClass('comment-box')).toBeTruthy();
+        expect(component.find('form').hasClass('comment-box')).toBeTruthy();
     });
 
     it('shows a comment list', () => {
-        // all of this because comment list is actually a container and not a react component
-        expect(component.find('Connect(CommentList)').type().WrappedComponent({ comments: [] }).props.className).toEqual('comment-list')
+        expect(component.find('ul').hasClass('comment-list')).toBeTruthy();
     });
 });

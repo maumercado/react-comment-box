@@ -1,20 +1,20 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { Provider } from 'react-redux';
+import { render } from 'enzyme';
+import configureMockStore from 'redux-mock-store'
 
-import store from '../../index';
 import CommentList from '../../components/comment_list';
 
 describe('CommentList', () => {
+
     let component;
 
     beforeEach(() => {
-        const props = ['New Comment', 'Other New Comment'];
+        const comments = ['New Comment', 'Other New Comment'];
+        const middlewares = [];
+        const mockStore = configureMockStore(middlewares);
 
-        component = shallow(<CommentList />, { context: { store } });
-
-        component.setProps({
-            comments: props
-        });
+        component = render(<CommentList store={mockStore({ comments })} />);
     });
 
     it('has the correct class', () => {
@@ -22,7 +22,7 @@ describe('CommentList', () => {
     });
 
     it('shows and LI for each comment', () => {
-        expect(component.find('li').length).toHaveLength(2);
+        expect(component.find('li')).toHaveLength(2);
     });
 
     it('shows each comment that is provided', () => {
