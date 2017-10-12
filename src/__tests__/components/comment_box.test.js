@@ -1,17 +1,22 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
+import { saveComment } from '../../actions';
 
 import CommentBox from '../../components/comment_box';
 
 describe('CommentBox', () => {
     let component;
-
+    let store;
     beforeEach(() => {
-        component = shallow(<CommentBox />);
+        const middlewares = [];
+        const mockStore = configureMockStore(middlewares);
+        store = mockStore({})
+        component = mount(<CommentBox store={store} />);
     });
 
     it('has the correct class', () => {
-        expect(component.hasClass('comment-box')).toBeTruthy();
+        expect(component.find('form').hasClass('comment-box')).toBeTruthy();
     });
 
     it('has a text area', () => {
@@ -28,6 +33,7 @@ describe('CommentBox', () => {
         });
 
         it('shows that text in the text area', () => {
+
             expect(component.find('textarea').props().value).toBe('new comment');
         });
 
