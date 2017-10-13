@@ -1,17 +1,17 @@
+/* global expect, it, describe, beforeEach, configureMockStore */
 import React from 'react';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
-import { saveComment } from '../../actions';
 
 import CommentBox from '../../components/comment_box';
 
 describe('CommentBox', () => {
     let component;
     let store;
+
     beforeEach(() => {
         const middlewares = [];
         const mockStore = configureMockStore(middlewares);
-        store = mockStore({})
+        store = mockStore({});
         component = mount(<CommentBox store={store} />);
     });
 
@@ -29,18 +29,20 @@ describe('CommentBox', () => {
 
     describe('entering some text', () => {
         beforeEach(() => {
-            component.find('textarea').simulate('change', { target: { value: 'new comment' } });
+            component.find('textarea').simulate('change', {
+                target: { value: 'new comment' }
+            });
         });
 
         it('shows that text in the text area', () => {
-
-            expect(component.find('textarea').props().value).toBe('new comment');
+            expect(component.find('textarea').props().value).toBe(
+                'new comment'
+            );
         });
 
         it('when submitted clears input', () => {
-            component.simulate('submit', { preventDefault() { } });
+            component.simulate('submit', { preventDefault() {} });
             expect(component.find('textarea').props().value).toBe('');
         });
     });
-
 });

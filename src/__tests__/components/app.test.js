@@ -1,17 +1,20 @@
+/* global expect, it, describe, beforeEach, configureMockStore */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'enzyme';
-import configureMockStore from 'redux-mock-store'
 
 import App from '../../components/app';
-
 
 describe('App', () => {
     let component;
     beforeEach(() => {
         const middlewares = [];
         const mockStore = configureMockStore(middlewares);
-        component = render(<Provider store={mockStore({ comments: [] })}><App /></Provider>);
+        component = render(
+            <Provider store={mockStore({ comments: [] })}>
+                <App />
+            </Provider>
+        );
     });
 
     it('shows a comment box', () => {

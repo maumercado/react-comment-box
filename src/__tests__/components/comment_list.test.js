@@ -1,11 +1,11 @@
+/* global expect, it, describe, beforeEach, configureMockStore */
+
 import React from 'react';
 import { render } from 'enzyme';
-import configureMockStore from 'redux-mock-store'
 
 import CommentList from '../../components/comment_list';
 
 describe('CommentList', () => {
-
     let component;
 
     beforeEach(() => {
@@ -28,5 +28,4 @@ describe('CommentList', () => {
         expect(component.text()).toContain('New Comment');
         expect(component.text()).toContain('Other New Comment');
     });
-
 });
